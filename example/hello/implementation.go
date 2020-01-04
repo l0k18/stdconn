@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/bindchain/core/pkg/stdconn"
+	"github.com/l0k18/stdconn"
 	"net/rpc"
 	"os"
 )
@@ -15,13 +15,17 @@ func NewHello() *Hello {
 	return &Hello{make(chan struct{})}
 }
 
-func (h *Hello) Say(name string, reply *string) (err error) {
+func (h *Hello) Say(
+	name string, reply *string,
+) (err error) {
 	r := "hello " + name
 	*reply = r
 	return
 }
 
-func (h *Hello) Bye(_ int, reply *string) (err error) {
+func (h *Hello) Bye(
+	_ int, reply *string,
+) (err error) {
 	r := "i hear and obey *dies*"
 	*reply = r
 	close(h.Quit)
@@ -31,7 +35,8 @@ func (h *Hello) Bye(_ int, reply *string) (err error) {
 func main() {
 	printlnE("starting up example worker")
 	hello := NewHello()
-	stdConn := stdconn.New(os.Stdin, os.Stdout, hello.Quit)
+	stdConn := stdconn.
+		New(os.Stdin, os.Stdout, hello.Quit)
 	err := rpc.Register(hello)
 	if err != nil {
 		printlnE(err)
@@ -43,6 +48,7 @@ func main() {
 }
 
 func printlnE(a ...interface{}) {
-	out := append([]interface{}{"[Hello]"}, a...)
+	out := append([]interface{}{"[Hello]"}, 
+		a...)
 	_, _ = fmt.Fprintln(os.Stderr, out...)
 }
