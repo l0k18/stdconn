@@ -1,8 +1,8 @@
 package worker
 
 import (
-	"github.com/bindchain/core/pkg/log"
-	"github.com/bindchain/core/pkg/stdconn"
+	"github.com/l0k18/log"
+	"github.com/l0k18/stdconn"
 	"os"
 	"os/exec"
 )
